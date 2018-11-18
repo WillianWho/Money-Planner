@@ -57,5 +57,18 @@ public class UsuarioDAO extends Sql {
         }
         return retorno;
     }
+    public int delete(String username, String password, BeanUsuario u ) throws ClassNotFoundException, SQLException{
+        int retorno;
+        con = openConnection(username,password,banco);
+        stmt = con.prepareStatement("DELETE FROM `usuario` WHERE PK_ID = ?");
+        stmt.setInt(1, u.getPK_ID());
+        if(stmt.executeUpdate()!=0){
+            JOptionPane.showMessageDialog(null, "Os dasos foram apagados corretamente", "Delete", INFORMATION_MESSAGE, null);
+            retorno = 1;
+        }else{
+            retorno =0;
+        }
+        return retorno;
+    } 
 
 }
