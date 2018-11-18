@@ -21,16 +21,16 @@ public class ContaDAO extends SQL {
 
     private final String banco = "mp";
 
-    public int create(String username, String password, BeanConta c) throws ClassNotFoundException, SQLException {
+    public int insert(String username, String password, BeanConta c) throws ClassNotFoundException, SQLException {
 
         int retorno;
         con = openConnection(username, password, banco);
         stmt = con.prepareStatement("INSERT INTO `conta`(`valor`, `vencimento`, `status`, `tipo`) VALUES (?,?,?,?)");
-        stmt.setDouble (1,c.getValor());
+        stmt.setDouble(1, c.getValor());
         stmt.setDate(2, c.getVencimento());
         stmt.setString(3, c.getStatus());
-        stmt.setString(4,c.getTipo());
-       
+        stmt.setString(4, c.getTipo());
+
         if (stmt.executeUpdate() != 0) {
             JOptionPane.showMessageDialog(null, "Os dasos foram cadastrados corretamente", "Cadastrado!", INFORMATION_MESSAGE, null);
             retorno = 1;
@@ -40,6 +40,24 @@ public class ContaDAO extends SQL {
             closeConnection(con, stmt);
         }
 
+        return retorno;
+    }
+
+    public int update(String username, String password, BeanConta c ) throws ClassNotFoundException, SQLException{
+        int retorno;
+        con = openConnection(username,password,banco);
+        stmt = con.prepareStatement("UPDATE `conta` SET `valor`=?,`vencimento`=?,`status`=?,`tipo`=? WHERE `PK_ID`=?");
+        stmt.setDouble(1, c.getValor());
+        stmt.setDate(2, c.getVencimento());
+        stmt.setString(3, c.getStatus());
+        stmt.setString(4, c.getTipo());
+        stmt.setInt(5, c.getPK_ID());
+        if(stmt.executeUpdate()!=0){
+            JOptionPane.showMessageDialog(null, "Os dasos foram atualizados corretamente", "Update", INFORMATION_MESSAGE, null);
+            retorno = 1;
+        }else{
+            retorno =0;
+        }
         return retorno;
     }
 }
