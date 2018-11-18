@@ -10,5 +10,7 @@ package Interface;
  * @author willi
  */
 public interface Usuario {
-    
+    public abstract int cadastrar();
+    public abstract int atualizarPrivilegios();
+    public abstract int remover();
 }
