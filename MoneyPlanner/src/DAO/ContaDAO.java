@@ -30,7 +30,7 @@ public class ContaDAO extends Sql {
         stmt.setString(4, c.getTipo());
 
         if (stmt.executeUpdate() != 0) {
-            JOptionPane.showMessageDialog(null, "Os dasos foram cadastrados corretamente", "Cadastrado!", INFORMATION_MESSAGE, null);
+            JOptionPane.showMessageDialog(null, "Os dasos foram inseridos corretamente", "Insert", INFORMATION_MESSAGE, null);
             retorno = 1;
             closeConnection(con, stmt);
         } else {
