@@ -15,7 +15,7 @@ import java.sql.SQLException;
  *
  * @author willi
  */
-public class SQL {
+public class Sql{
 
     protected Connection con = null;
     protected PreparedStatement stmt = null;

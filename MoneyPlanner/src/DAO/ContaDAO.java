@@ -6,7 +6,7 @@
 package DAO;
 
 import Bean.BeanConta;
-import SQL.SQL;
+import SQL.Sql;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
@@ -15,7 +15,7 @@ import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
  *
  * @author willi
  */
-public class ContaDAO extends SQL {
+public class ContaDAO extends Sql {
 
     private final String banco = "mp";
 
