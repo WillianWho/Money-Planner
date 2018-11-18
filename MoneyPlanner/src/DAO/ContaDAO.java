@@ -60,4 +60,17 @@ public class ContaDAO extends SQL {
         }
         return retorno;
     }
+   public int delete(String username, String password, BeanConta c ) throws ClassNotFoundException, SQLException{
+        int retorno;
+        con = openConnection(username,password,banco);
+        stmt = con.prepareStatement("DELETE FROM `conta` WHERE PK_ID = ?");
+        stmt.setInt(1, c.getPK_ID());
+        if(stmt.executeUpdate()!=0){
+            JOptionPane.showMessageDialog(null, "Os dasos foram apagados corretamente", "Delete", INFORMATION_MESSAGE, null);
+            retorno = 1;
+        }else{
+            retorno =0;
+        }
+        return retorno;
+    } 
 }
