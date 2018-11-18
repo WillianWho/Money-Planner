@@ -17,27 +17,27 @@ public class BeanUsuario {
     private String nivelDePrivilegio;
     
 
-    public String getNome() {
+    public String getNomeCompleto() {
         return nomeCompleto;
     }
 
-    public void setNome(String nomeCompleto) {
+    public void setNomeCompleto(String nomeCompleto) {
         this.nomeCompleto = nomeCompleto;
     }
 
-    public String getEmail() {
+    public String getUsername() {
         return username;
     }
 
-    public void setEmail(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getpassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setpassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
