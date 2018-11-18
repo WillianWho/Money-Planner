@@ -50,13 +50,21 @@ public class TesteClass {
         c.setPK_ID(1);
         conta.update("root", "root", c);
     }
+    public static void testarDelete() throws ParseException, ClassNotFoundException, SQLException{
+        ContaDAO conta = new ContaDAO();
+        BeanConta c = new BeanConta();
+        
+        c.setPK_ID(1);
+        conta.delete("root", "root", c);
+    }
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         try {
             //testarCadastro();
-            testarUpdate();
+            //testarUpdate();
+            testarDelete();
         } catch (ParseException | ClassNotFoundException | SQLException ex) {
              JOptionPane.showMessageDialog(null, ex, "Erro", INFORMATION_MESSAGE, null);
         }
