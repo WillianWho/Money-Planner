@@ -60,7 +60,7 @@ public class TesteClass {
         conta.delete("root", "root", c);
     }
 
-    private static void testarUserInsert() throws ClassNotFoundException, SQLException{
+    private static void testarUserInsert() throws ClassNotFoundException, SQLException {
         UsuarioDAO user = new UsuarioDAO();
         BeanUsuario u = new BeanUsuario();
         u.setUsername("BillWho");
@@ -69,9 +69,9 @@ public class TesteClass {
         u.setNivelDePrivilegio("root");
         user.insert("root", "root", u);
     }
-    
-    private static void testarUserUpdate(int id) throws ClassNotFoundException, SQLException{
-     UsuarioDAO user = new UsuarioDAO();
+
+    private static void testarUserUpdate(int id) throws ClassNotFoundException, SQLException {
+        UsuarioDAO user = new UsuarioDAO();
         BeanUsuario u = new BeanUsuario();
         u.setUsername("Will");
         u.setPassword("guest");
@@ -80,25 +80,29 @@ public class TesteClass {
         u.setPK_ID(id);
         user.update("root", "root", u);
     }
+
+    private static void testarUserDelete(int id) throws ClassNotFoundException, SQLException {
+        UsuarioDAO user = new UsuarioDAO();
+        BeanUsuario u = new BeanUsuario();
+
+        u.setPK_ID(id);
+        user.delete("root", "root", u);
+    }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         try {
-            //testarCadastro();
-            //testarUpdate();
-            //testarDelete();
-            //testarUserInsert();
-            //testarUserUpdate(1);
-            //testarUserUpdate(2);
-            testarUserDelete();
-        } catch (/*ParseException |*/ ClassNotFoundException | SQLException ex) {
+            testarCadastro();
+            testarUpdate();
+            testarDelete();
+            
+            testarUserInsert();
+            testarUserUpdate(1);
+            testarUserDelete(1);
+        } catch (ParseException | ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Erro", INFORMATION_MESSAGE, null);
         }
     }
-
-    private static void testarUserDelete() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }
