@@ -14,6 +14,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
 /**
  *
@@ -34,16 +36,29 @@ public class TesteClass {
         c.setTipo("Água");
         c.setValor(22);
         c.setVencimento(data);
-        conta.create("root", "root", c);
+        conta.insert("root", "root", c);
+    }
+    public static void testarUpdate() throws ParseException, ClassNotFoundException, SQLException{
+         DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Date data = new java.sql.Date(fmt.parse("2020-11-11").getTime());
+        ContaDAO conta = new ContaDAO();
+        BeanConta c = new BeanConta();
+        c.setStatus("pago");
+        c.setTipo("Luz");
+        c.setValor(50);
+        c.setVencimento(data);
+        c.setPK_ID(1);
+        conta.update("root", "root", c);
     }
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         try {
-            testarCadastro();
+            //testarCadastro();
+            testarUpdate();
         } catch (ParseException | ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(TesteClass.class.getName()).log(Level.SEVERE, null, ex);
+             JOptionPane.showMessageDialog(null, ex, "Erro", INFORMATION_MESSAGE, null);
         }
     }
     
