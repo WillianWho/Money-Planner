@@ -13,7 +13,7 @@ public class BeanUsuario {
     private int PK_ID;
     private String nomeCompleto;
     private String username;
-    private String Senha;
+    private String password;
     private String nivelDePrivilegio;
     
 
@@ -33,12 +33,12 @@ public class BeanUsuario {
         this.username = username;
     }
 
-    public String getSenha() {
-        return Senha;
+    public String getpassword() {
+        return password;
     }
 
-    public void setSenha(String Senha) {
-        this.Senha = Senha;
+    public void setpassword(String password) {
+        this.password = password;
     }
 
     public String getNivelDePrivilegio() {
