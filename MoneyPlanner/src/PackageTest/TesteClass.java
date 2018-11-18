@@ -6,7 +6,9 @@
 package PackageTest;
 
 import Bean.BeanConta;
+import Bean.BeanUsuario;
 import DAO.ContaDAO;
+import DAO.UsuarioDAO;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -23,13 +25,11 @@ import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
  */
 public class TesteClass {
 
-    
-    
-    public static void testarCadastro() throws ParseException, ClassNotFoundException, SQLException{
+    public static void testarCadastro() throws ParseException, ClassNotFoundException, SQLException {
         Date sqlDate;
         DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date data = new java.sql.Date(fmt.parse("2018-11-11").getTime());
-        
+
         ContaDAO conta = new ContaDAO();
         BeanConta c = new BeanConta();
         c.setStatus("pago");
@@ -38,8 +38,9 @@ public class TesteClass {
         c.setVencimento(data);
         conta.insert("root", "root", c);
     }
-    public static void testarUpdate() throws ParseException, ClassNotFoundException, SQLException{
-         DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+
+    public static void testarUpdate() throws ParseException, ClassNotFoundException, SQLException {
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date data = new java.sql.Date(fmt.parse("2020-11-11").getTime());
         ContaDAO conta = new ContaDAO();
         BeanConta c = new BeanConta();
@@ -50,12 +51,23 @@ public class TesteClass {
         c.setPK_ID(1);
         conta.update("root", "root", c);
     }
-    public static void testarDelete() throws ParseException, ClassNotFoundException, SQLException{
+
+    public static void testarDelete() throws ParseException, ClassNotFoundException, SQLException {
         ContaDAO conta = new ContaDAO();
         BeanConta c = new BeanConta();
-        
+
         c.setPK_ID(1);
         conta.delete("root", "root", c);
+    }
+
+    public static void testarUserInsert() throws ClassNotFoundException, SQLException{
+        UsuarioDAO user = new UsuarioDAO();
+        BeanUsuario u = new BeanUsuario();
+        u.setUsername("BillWho");
+        u.setPassword("root");
+        u.setNomeCompleto("Willian");
+        u.setNivelDePrivilegio("root");
+        user.insert("root", "root", u);
     }
     /**
      * @param args the command line arguments
@@ -64,10 +76,11 @@ public class TesteClass {
         try {
             //testarCadastro();
             //testarUpdate();
-            testarDelete();
-        } catch (ParseException | ClassNotFoundException | SQLException ex) {
-             JOptionPane.showMessageDialog(null, ex, "Erro", INFORMATION_MESSAGE, null);
+            //testarDelete();
+            testarUserInsert();
+        } catch (/*ParseException |*/ ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex, "Erro", INFORMATION_MESSAGE, null);
         }
     }
-    
+
 }
