@@ -7,15 +7,11 @@ package PackageTest;
 
 import Bean.BeanConta;
 import Bean.BeanUsuario;
-import DAO.ContaDAO;
-import DAO.UsuarioDAO;
-import java.sql.Date;
+import DAO.Dao;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
@@ -25,84 +21,87 @@ import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
  */
 public class TesteClass {
 
-    private static void testarCadastro() throws ParseException, ClassNotFoundException, SQLException {
-        Date sqlDate;
-        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
-        java.sql.Date data = new java.sql.Date(fmt.parse("2018-11-11").getTime());
-
-        ContaDAO conta = new ContaDAO();
-        BeanConta c = new BeanConta();
-        c.setStatus("pago");
-        c.setTipo("Água");
-        c.setValor(22);
-        c.setVencimento(data);
-        conta.insert("root", "root", c);
-    }
-
-    private static void testarUpdate() throws ParseException, ClassNotFoundException, SQLException {
-        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
-        java.sql.Date data = new java.sql.Date(fmt.parse("2020-11-11").getTime());
-        ContaDAO conta = new ContaDAO();
-        BeanConta c = new BeanConta();
-        c.setStatus("pago");
-        c.setTipo("Luz");
-        c.setValor(50);
-        c.setVencimento(data);
-        c.setPK_ID(1);
-        conta.update("root", "root", c);
-    }
-
-    private static void testarDelete() throws ParseException, ClassNotFoundException, SQLException {
-        ContaDAO conta = new ContaDAO();
-        BeanConta c = new BeanConta();
-
-        c.setPK_ID(1);
-        conta.delete("root", "root", c);
-    }
-
-    private static void testarUserInsert() throws ClassNotFoundException, SQLException {
-        UsuarioDAO user = new UsuarioDAO();
-        BeanUsuario u = new BeanUsuario();
-        u.setUsername("BillWho");
-        u.setPassword("root");
-        u.setNomeCompleto("Willian");
-        u.setNivelDePrivilegio("root");
-        user.insert("root", "root", u);
-    }
-
-    private static void testarUserUpdate(int id) throws ClassNotFoundException, SQLException {
-        UsuarioDAO user = new UsuarioDAO();
-        BeanUsuario u = new BeanUsuario();
-        u.setUsername("Will");
-        u.setPassword("guest");
-        u.setNomeCompleto("Willian Ferreira L. de Oliveira");
-        u.setNivelDePrivilegio("guest");
-        u.setPK_ID(id);
-        user.update("root", "root", u);
-    }
-
-    private static void testarUserDelete(int id) throws ClassNotFoundException, SQLException {
-        UsuarioDAO user = new UsuarioDAO();
-        BeanUsuario u = new BeanUsuario();
-
-        u.setPK_ID(id);
-        user.delete("root", "root", u);
-    }
-
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         try {
-            testarCadastro();
-            testarUpdate();
-            testarDelete();
-            
-            testarUserInsert();
-            testarUserUpdate(1);
-            testarUserDelete(1);
-        } catch (ParseException | ClassNotFoundException | SQLException ex) {
+            testClassDAOInsert(22.5f,"2018-02-09","pago", "teste da classe DAO" );
+            testClassDAOUpdate(1,22.5f,"2018-02-09","pendente", "teste update class DAO" );
+            testClassDAODelete(1,"conta");
+            testClassDAOInsert("billwho","root","willian","root");
+            testClassDAOUpdate(1,"billwho","root","willian","guest");
+            testClassDAODelete(1,"user");
+        } catch (ParseException |ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Erro", INFORMATION_MESSAGE, null);
         }
     }
+
+   
+    private static void testClassDAOInsert(double valor, String vencimento, String status, String tipo) throws ParseException, ClassNotFoundException, SQLException {
+        Dao dao = new Dao();
+        BeanConta c = new BeanConta();
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Date data = new java.sql.Date(fmt.parse(vencimento).getTime());
+        c.setStatus(status);
+        c.setTipo(tipo);
+        c.setValor(valor);
+        c.setVencimento(data);
+        dao.insert("root", "root", c);
+    }
+
+    private static void testClassDAOInsert(String username, String password, String nomeCompleto, String nivelDePrivilegio) throws ParseException, ClassNotFoundException, SQLException {
+        Dao dao = new Dao();
+        BeanUsuario u = new BeanUsuario();
+        u.setUsername(username);
+        u.setPassword(password);
+        u.setNomeCompleto(nomeCompleto);
+        u.setNivelDePrivilegio(nivelDePrivilegio);
+        dao.insert("root", "root", u);
+    }
+
+    private static void testClassDAOUpdate(int PK_ID, double valor, String vencimento, String status, String tipo) throws ParseException, ClassNotFoundException, SQLException {
+        Dao dao = new Dao();
+        BeanConta c = new BeanConta();
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Date data = new java.sql.Date(fmt.parse(vencimento).getTime());
+        c.setStatus(status);
+        c.setTipo(tipo);
+        c.setValor(valor);
+        c.setVencimento(data);
+        c.setPK_ID(PK_ID);
+        dao.update("root", "root", c);
+    }
+
+    private static void testClassDAOUpdate(int PK_ID, String username, String password, String nomeCompleto, String nivelDePrivilegio) throws ParseException, ClassNotFoundException, SQLException {
+        Dao dao = new Dao();
+        BeanUsuario u = new BeanUsuario();
+        u.setUsername(username);
+        u.setPassword(password);
+        u.setNomeCompleto(nomeCompleto);
+        u.setNivelDePrivilegio(nivelDePrivilegio);
+        u.setPK_ID(PK_ID);
+        dao.update("root", "root", u);
+    }
+
+    private static void testClassDAODelete(int PK_ID, String option) throws ClassNotFoundException, SQLException {
+        Dao dao = new Dao();
+        switch (option) {
+            case "user":
+                BeanUsuario u = new BeanUsuario();
+
+                u.setPK_ID(PK_ID);
+                dao.delete("root", "root", u);
+                break;
+            case "conta":
+                BeanConta c = new BeanConta();
+                c.setPK_ID(PK_ID);
+                dao.delete("root", "root", c);
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "opção incorreta", "Delete", INFORMATION_MESSAGE, null);
+        }
+
+    }
+
 }
