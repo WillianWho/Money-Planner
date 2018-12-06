@@ -5,12 +5,17 @@
  */
 package Interface;
 
+import java.sql.SQLException;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
 /**
  *
  * @author willi
  */
 public interface Usuario {
-    public abstract int cadastrar();
     public abstract int atualizarPrivilegios();
+    public abstract boolean verificarUsuario(JTextField user)throws ClassNotFoundException, SQLException;
+    public abstract boolean verificarSenha(JTextField user,JPasswordField password)throws ClassNotFoundException, SQLException;
     public abstract int remover();
 }

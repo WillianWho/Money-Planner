@@ -51,5 +51,21 @@ public class Useful {
         return true;
         }
     }
+    public boolean wrongField(JPasswordField field){
+        field.setBorder(this.vermelhoEscuro);
+            return false;
+    }
+    public boolean wrongField(JTextField field){
+        field.setBorder(this.vermelhoEscuro);
+            return false;
+    }
+    public boolean correctField(JPasswordField field){
+        field.setBorder(this.verdeEscuro);
+            return true;
+    }
+    public boolean correctField(JTextField field){
+        field.setBorder(this.verdeEscuro);
+            return true;
+    }
 
 }

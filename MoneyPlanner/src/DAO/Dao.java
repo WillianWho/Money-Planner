@@ -9,6 +9,7 @@ import Bean.BeanConta;
 import Bean.BeanUsuario;
 import SQL.Sql;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
@@ -16,9 +17,9 @@ import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
  *
  * @author willi
  */
-public class Dao extends Sql {
+public class Dao extends Sql implements CRUD {
 
-    private final String banco = "mp";
+    final protected String banco = "mp";
 
     /**
      *
@@ -29,6 +30,7 @@ public class Dao extends Sql {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
+    @Override
     public int insert(String username, String password, BeanUsuario u) throws ClassNotFoundException, SQLException {
         int retorno;
         con = openConnection(username, password, banco);
@@ -57,6 +59,7 @@ public class Dao extends Sql {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
+    @Override
     public int insert(String username, String password, BeanConta c) throws ClassNotFoundException, SQLException {
 
         int retorno;
@@ -88,6 +91,7 @@ public class Dao extends Sql {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
+    @Override
     public int update(String username, String password, BeanUsuario u) throws ClassNotFoundException, SQLException {
         int retorno;
         con = openConnection(username, password, banco);
@@ -117,6 +121,7 @@ public class Dao extends Sql {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
+    @Override
     public int update(String username, String password, BeanConta c) throws ClassNotFoundException, SQLException {
         int retorno;
         con = openConnection(username, password, banco);
@@ -144,6 +149,7 @@ public class Dao extends Sql {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
+    @Override
     public int delete(String username, String password, BeanUsuario u) throws ClassNotFoundException, SQLException {
         int retorno;
         con = openConnection(username, password, banco);
@@ -167,6 +173,7 @@ public class Dao extends Sql {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
+    @Override
     public int delete(String username, String password, BeanConta c) throws ClassNotFoundException, SQLException {
         int retorno;
         con = openConnection(username, password, banco);
@@ -179,6 +186,11 @@ public class Dao extends Sql {
             retorno = 0;
         }
         return retorno;
+    }
+
+    @Override
+    public ArrayList select(String username, String password, BeanUsuario c) throws ClassNotFoundException, SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 

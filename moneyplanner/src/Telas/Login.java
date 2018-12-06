@@ -5,6 +5,17 @@
  */
 package Telas;
 
+import Bean.BeanUsuario;
+import Code.User;
+import DAO.Select;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
+
 /**
  *
  * @author willi
@@ -31,9 +42,9 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        jTextFieldUsername = new javax.swing.JTextField();
+        jPasswordFieldPassword = new javax.swing.JPasswordField();
+        jButtonLogar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -52,9 +63,36 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
         jLabel3.setText("Username:");
 
-        jButton1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jButton1.setText("Logar");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTextFieldUsername.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldUsernameFocusLost(evt);
+            }
+        });
+        jTextFieldUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldUsernameActionPerformed(evt);
+            }
+        });
+
+        jPasswordFieldPassword.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jPasswordFieldPasswordFocusLost(evt);
+            }
+        });
+
+        jButtonLogar.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jButtonLogar.setText("Logar");
+        jButtonLogar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButtonLogar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLogarActionPerformed(evt);
+            }
+        });
+        jButtonLogar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButtonLogarKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -68,16 +106,16 @@ public class Login extends javax.swing.JFrame {
                         .addGap(73, 73, 73))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonLogar)
+                            .addComponent(jPasswordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addGap(91, 91, 91)))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jLabel1, jLabel3, jPasswordField1, jTextField1});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonLogar, jLabel1, jLabel3, jPasswordFieldPassword, jTextFieldUsername});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,17 +125,17 @@ public class Login extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPasswordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(jButtonLogar)
                 .addGap(24, 24, 24))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jPasswordField1, jTextField1});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonLogar, jPasswordFieldPassword, jTextFieldUsername});
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -136,6 +174,72 @@ public class Login extends javax.swing.JFrame {
         this.dispose();
         tp.setVisible(true);
     }//GEN-LAST:event_jMenu2MouseClicked
+
+    private void jButtonLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogarActionPerformed
+        User u = new User();
+        try {
+            if (u.verificarUsuario(this.jTextFieldUsername)
+                    && u.verificarSenha(this.jTextFieldUsername, this.jPasswordFieldPassword)) {
+                System.out.println("Logou");
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Algo de errado aconteceu:\n" + ex, "Select", INFORMATION_MESSAGE, null);
+        }
+
+    }//GEN-LAST:event_jButtonLogarActionPerformed
+
+    private void jTextFieldUsernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldUsernameFocusLost
+
+        User u = new User();
+        try {
+            u.verificarUsuario(this.jTextFieldUsername);
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Algo de errado aconteceu:\n" + ex, "Select", INFORMATION_MESSAGE, null);
+
+        }
+    }//GEN-LAST:event_jTextFieldUsernameFocusLost
+
+    private void jPasswordFieldPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordFieldPasswordFocusLost
+
+        User u = new User();
+        try {
+
+            u.verificarSenha(this.jTextFieldUsername, this.jPasswordFieldPassword);
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Algo de errado aconteceu:\n" + ex, "Select", INFORMATION_MESSAGE, null);
+        }
+    }//GEN-LAST:event_jPasswordFieldPasswordFocusLost
+
+    private void jTextFieldUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUsernameActionPerformed
+        User u = new User();
+        try {
+            if (u.verificarUsuario(this.jTextFieldUsername)) {
+                this.jPasswordFieldPassword.grabFocus();
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Algo de errado aconteceu:\n" + ex, "Select", INFORMATION_MESSAGE, null);
+        }
+    }//GEN-LAST:event_jTextFieldUsernameActionPerformed
+
+    private void jButtonLogarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonLogarKeyPressed
+        User u = new User();
+        try {
+            if (u.verificarUsuario(this.jTextFieldUsername)
+                    && u.verificarSenha(this.jTextFieldUsername, this.jPasswordFieldPassword)) {
+
+                TelaPrincipal tp = new TelaPrincipal(jTextFieldUsername.getText(), "guest");
+                this.dispose();
+                tp.setVisible(true);
+            } else {
+                System.out.println("Nao logou");
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Algo de errado aconteceu:\n" + ex, "Select", INFORMATION_MESSAGE, null);
+        }
+
+    }//GEN-LAST:event_jButtonLogarKeyPressed
 
     /**
      * @param args the command line arguments
@@ -176,7 +280,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonLogar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -184,7 +288,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField jPasswordFieldPassword;
+    private javax.swing.JTextField jTextFieldUsername;
     // End of variables declaration//GEN-END:variables
 }

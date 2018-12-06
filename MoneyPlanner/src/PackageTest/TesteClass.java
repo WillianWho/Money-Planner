@@ -8,6 +8,7 @@ package PackageTest;
 import Bean.BeanConta;
 import Bean.BeanUsuario;
 import DAO.Dao;
+import DAO.Select;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -26,15 +27,42 @@ public class TesteClass {
      */
     public static void main(String[] args) {
         try {
-            testClassDAOInsert(22.5f,"2018-02-09","pago", "teste da classe DAO" );
+            /*testClassDAOInsert(22.5f,"2018-02-09","pago", "teste da classe DAO" );
             testClassDAOUpdate(1,22.5f,"2018-02-09","pendente", "teste update class DAO" );
             testClassDAODelete(1,"conta");
             testClassDAOInsert("billwho","root","willian","root");
             testClassDAOUpdate(1,"billwho","root","willian","guest");
-            testClassDAODelete(1,"user");
-        } catch (ParseException |ClassNotFoundException | SQLException ex) {
+            testClassDAODelete(1,"user");*/
+            System.out.println(testNewSelect("billwho","root"));
+        } catch (/*ParseException |*/ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Erro", INFORMATION_MESSAGE, null);
         }
+    }
+    private static String testeClassSelect(String username) throws ClassNotFoundException, SQLException{
+        BeanUsuario us = new BeanUsuario();
+        Select select = new Select();
+        us.setUsername(username);
+        String user = null;
+       for(BeanUsuario u: select.select("root", "root", us)){
+           user = u.getUsername();
+       }
+        
+        /*Select.select("root", "root", us).forEach((BeanUsuario u->){
+        u.getUsername();
+        });*/
+        
+        return user;
+    }
+    private static String testNewSelect(String usuario, String senha) throws ClassNotFoundException, SQLException{
+        BeanUsuario us = new BeanUsuario();
+        Select select = new Select();
+        
+        String s = null;
+       for(BeanUsuario u: select.select("root", "root",usuario, senha)){
+          
+           s = u.getPassword();
+       }
+       return "Senha: "+s;
     }
 
    
