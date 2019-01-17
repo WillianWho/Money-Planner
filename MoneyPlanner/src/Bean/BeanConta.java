@@ -5,7 +5,7 @@
  */
 package Bean;
 
-import java.sql.Date;
+
 
 /**
  *
@@ -13,7 +13,7 @@ import java.sql.Date;
  */
 public class BeanConta {
     private double valor;
-    private Date vencimento;
+    private String vencimento;
     private int PK_ID;
     private String status;
     private String tipo;
@@ -26,11 +26,11 @@ public class BeanConta {
         this.valor = valor;
     }
 
-    public Date getVencimento() {
+    public String getVencimento() {
         return vencimento;
     }
 
-    public void setVencimento(Date vencimento) {
+    public void setVencimento(String vencimento) {
         this.vencimento = vencimento;
     }
 
