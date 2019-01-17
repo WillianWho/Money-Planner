@@ -35,31 +35,51 @@ public class User implements Usuario {
         Select select = new Select();
         us.setUsername(user.getText());
         String usuario = null;
-        for(BeanUsuario u: select.select("root", "root", us)){
-           usuario = u.getUsername();
-       }
-        if(us.getUsername().equals(usuario)){
-           return v.correctField(user);
-        }else{
+        for (BeanUsuario u : select.select("root", "root", us)) {
+            usuario = u.getUsername();
+        }
+        if (us.getUsername().equals(usuario)) {
+            return v.correctField(user);
+        } else {
             return v.wrongField(user);
         }
     }
 
     @Override
-    public boolean verificarSenha(JTextField user,JPasswordField password) throws ClassNotFoundException, SQLException {
+    public boolean verificarSenha(JTextField user, JPasswordField password) throws ClassNotFoundException, SQLException {
         BeanUsuario us = new BeanUsuario();
         Select select = new Select();
-         Useful v = new Useful();
-        
+        Useful v = new Useful();
+
         String s = null;
-       for(BeanUsuario u: select.select("root", "root",user.getText(), password.getText())){
-           s = u.getPassword();
-    }
-       if(password.getText().equals(s)){
-           return v.correctField(password);
-        }else{
+        for (BeanUsuario u : select.select("root", "root", user.getText(), password.getText())) {
+            s = u.getPassword();
+        }
+        if (password.getText().equals(s)) {
+            return v.correctField(password);
+        } else {
             return v.wrongField(password);
         }
-    
-}
+
+    }
+
+    /**
+     *
+     * @param usuario
+     * @param senha
+     * @return retorna guest se for usuário convidado, root se for adm, null se der erro
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    @Override
+    public String verificarPrivilegios(String usuario, String senha) throws ClassNotFoundException, SQLException {
+        
+        Select select = new Select();
+        
+        String p= "a";
+        for(BeanUsuario u: select.select(usuario, senha)){
+            p= u.getNivelDePrivilegio();
+        }
+        return p;
+    }
 }
