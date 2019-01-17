@@ -180,7 +180,9 @@ public class Login extends javax.swing.JFrame {
         try {
             if (u.verificarUsuario(this.jTextFieldUsername)
                     && u.verificarSenha(this.jTextFieldUsername, this.jPasswordFieldPassword)) {
-                System.out.println("Logou");
+                TelaPrincipal tp = new TelaPrincipal(jTextFieldUsername.getText(), u.verificarPrivilegios(jTextFieldUsername.getText(), jPasswordFieldPassword.getText()));
+                this.dispose();
+                tp.setVisible(true);
             }
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(null, "Algo de errado aconteceu:\n" + ex, "Select", INFORMATION_MESSAGE, null);
@@ -229,7 +231,7 @@ public class Login extends javax.swing.JFrame {
             if (u.verificarUsuario(this.jTextFieldUsername)
                     && u.verificarSenha(this.jTextFieldUsername, this.jPasswordFieldPassword)) {
 
-                TelaPrincipal tp = new TelaPrincipal(jTextFieldUsername.getText(), "guest");
+                TelaPrincipal tp = new TelaPrincipal(jTextFieldUsername.getText(), u.verificarPrivilegios(jTextFieldUsername.getText(), jPasswordFieldPassword.getText()));
                 this.dispose();
                 tp.setVisible(true);
             } else {
