@@ -16,7 +16,15 @@ import java.util.ArrayList;
  */
 public class Select extends Dao {
 
-    
+    /**
+     *
+     * @param username
+     * @param password
+     * @param us
+     * @return retorna o username
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     @Override
     public ArrayList<BeanUsuario> select(String username, String password, BeanUsuario us) throws ClassNotFoundException, SQLException {
      ArrayList<BeanUsuario> u = new ArrayList<>();
@@ -33,6 +41,16 @@ public class Select extends Dao {
      return u;
     }
     
+    /**
+     *
+     * @param username
+     * @param password
+     * @param bdUser
+     * @param bdSenha
+     * @return retorna a senha caso os dados do usuário e senha na tela esteja de acordo com o que está no banco
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public ArrayList<BeanUsuario> select(String username, String password, String bdUser, String bdSenha) throws ClassNotFoundException, SQLException {
      ArrayList<BeanUsuario> u = new ArrayList<>();
      BeanUsuario us = new BeanUsuario();
@@ -50,5 +68,32 @@ public class Select extends Dao {
       
      return u;
     }
+
+    /**
+     *
+     * @param bdUser
+     * @param bdSenha
+     * @return nivel de privilegio do usuário
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    public ArrayList<BeanUsuario> select(String bdUser, String bdSenha) throws ClassNotFoundException, SQLException {
+     ArrayList<BeanUsuario> u = new ArrayList<>();
+     BeanUsuario us = new BeanUsuario();
+     con = openConnection("root", "root", banco);
+     //SELECT `password`FROM `usuario` WHERE `username` = "billwho" and `password`= "root"
+     stmt = con.prepareStatement("SELECT `nivelDePrivilegio` FROM `usuario` WHERE `username` ='"+bdUser+"' and `password` = '"+bdSenha+"'");
+     
+     rs = stmt.executeQuery();
+     while(rs.next()){
+     
+     us.setNivelDePrivilegio(rs.getString("nivelDePrivilegio"));
+     u.add(us);
+     }
+      closeConnection(con, stmt);
+      
+     return u;
+    }
+    
     
 }
