@@ -1,3 +1,7 @@
-/MoneyPlanner/nbproject/private/
+MoneyPlanner/nbproject/
+MoneyPlanner/nbproject/project.properties
+MoneyPlanner/src/Telas/*.form
 /MoneyPlanner/build/
+
+
 TODO.txt
