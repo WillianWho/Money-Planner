@@ -66,7 +66,7 @@ public class Dao extends Sql implements CRUD {
         con = openConnection(username, password, banco);
         stmt = con.prepareStatement("INSERT INTO `conta`(`valor`, `vencimento`, `status`, `tipo`) VALUES (?,?,?,?)");
         stmt.setDouble(1, c.getValor());
-        stmt.setDate(2, c.getVencimento());
+        stmt.setString(2, c.getVencimento());
         stmt.setString(3, c.getStatus());
         stmt.setString(4, c.getTipo());
 
@@ -127,7 +127,7 @@ public class Dao extends Sql implements CRUD {
         con = openConnection(username, password, banco);
         stmt = con.prepareStatement("UPDATE `conta` SET `valor`=?,`vencimento`=?,`status`=?,`tipo`=? WHERE `PK_ID`=?");
         stmt.setDouble(1, c.getValor());
-        stmt.setDate(2, c.getVencimento());
+        stmt.setString(2, c.getVencimento());
         stmt.setString(3, c.getStatus());
         stmt.setString(4, c.getTipo());
         stmt.setInt(5, c.getPK_ID());
